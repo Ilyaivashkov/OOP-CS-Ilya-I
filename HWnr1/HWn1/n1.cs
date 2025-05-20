@@ -4,9 +4,7 @@ using System.Linq;
 
 namespace HomeworkVariant10
 {
-    /// <summary>
     /// Класс, представляющий массив и работу с ним.
-    /// </summary>
     public class Massiv
     {
         private List<int> _data;
@@ -16,10 +14,7 @@ namespace HomeworkVariant10
             _data = new List<int>();
         }
 
-        /// <summary>
         /// Ввод массива с клавиатуры.
-        /// </summary>
-        /// <param name="name">Название массива для отображения.</param>
         public void InputFromKeyboard(string name)
         {
             Console.WriteLine($"Введите элементы массива {name} через пробел:");
@@ -27,9 +22,7 @@ namespace HomeworkVariant10
             _data = input.Split(' ').Select(int.Parse).ToList();
         }
 
-        /// <summary>
-        /// Печать массива на экран.
-        /// </summary>
+        /// Вывод массива на экран.
         public void Output(string name)
         {
             Console.WriteLine($"Массив {name}: {string.Join(" ", _data)}");
@@ -79,7 +72,7 @@ namespace HomeworkVariant10
                 sum += _data[i];
             }
 
-            // Считаем, сколько таких же чисел есть в массиве
+            // Вычисление, сколько таких чисел есть в массиве
             return _data.Count(x => x == sum);
         }
     }
@@ -111,7 +104,7 @@ namespace HomeworkVariant10
                 // Формируем массив C
                 List<int> arrayCData = new List<int>();
 
-                // Элементы из B после ЛЕВОГО минимального
+                // Элементы из B после левого минимального
                 List<int> dataB = arrayB.GetData();
                 int minB = dataB.Min();
                 int minIndexB = dataB.IndexOf(minB);
@@ -121,7 +114,7 @@ namespace HomeworkVariant10
                     arrayCData.AddRange(dataB.GetRange(minIndexB + 1, dataB.Count - minIndexB - 1));
                 }
 
-                // Элементы из A между ПРАВЫМ минимальным и элементом с номером варианта
+                // Элементы из A между правым минимальным и элементом с номером варианта
                 List<int> dataA = arrayA.GetData();
                 int minA = dataA.Min();
                 int minIndexA = dataA.LastIndexOf(minA);
@@ -153,7 +146,7 @@ namespace HomeworkVariant10
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                Console.WriteLine($"ошибка: {ex.Message}");
             }
         }
     }
