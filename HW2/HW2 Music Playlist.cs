@@ -3,101 +3,94 @@ using System.Collections.Generic;
 
 namespace MusicApp
 {
+    /// <summary>
+    /// Represents a playlist that holds a collection of unique songs.
+    /// </summary>
     public class Playlist
     {
-        //Приватные поля
-        private List<string> songs; // коллекция песен в плейлисте
-        private string playlistName; // название плейлиста
-        private int maxSongsCount; // максимальное количество песен, которое может быть в плейлисте
+        // Private fields
+        private readonly List<string> _songs;
+        private readonly string _playlistName;
+        private readonly int _maxSongsCount;
 
-        //Открытые свойства
-        public string PlaylistName
-        {
-            get { return playlistName; }
-        }
+        // Public properties (read-only)
+        public string PlaylistName => _playlistName;
 
-        public int MaxSongsCount
-        {
-            get { return maxSongsCount; }
-        }
+        public int MaxSongsCount => _maxSongsCount;
 
-        public int SongsCount
-        {
-            get { return songs.Count; }
-        }
+        public int SongsCount => _songs.Count;
 
-        // Конструктор
+        /// <summary>
+        /// Initializes a new instance of the Playlist class.
+        /// </summary>
+        /// <param name="playlistName">The name of the playlist.</param>
+        /// <param name="maxSongsCount">The maximum number of songs allowed in the playlist.</param>
+        /// <exception cref="ArgumentException">Thrown when the playlist name is empty or maxSongsCount is invalid.</exception>
         public Playlist(string playlistName, int maxSongsCount)
         {
-            if (playlistName == "")
+            if (string.IsNullOrWhiteSpace(playlistName))
             {
-                Console.WriteLine("Название не может быть пустым");
-                return;
+                throw new ArgumentException("Playlist name cannot be empty.");
             }
 
             if (maxSongsCount <= 0)
             {
-                Console.WriteLine("Максимальное количество песен не может быть меньше или равно нулю");
-                return;
+                throw new ArgumentException("Maximum number of songs must be greater than zero.");
             }
 
-            this.playlistName = playlistName;
-            this.maxSongsCount = maxSongsCount;
-            songs = new List<string>();
+            _playlistName = playlistName;
+            _maxSongsCount = maxSongsCount;
+            _songs = new List<string>();
         }
 
-        // Добавление песни в плейлист (метод AddSong)
+        /// <summary>
+        /// Adds a song to the playlist if there's space and it's not a duplicate.
+        /// </summary>
+        /// <param name="song">The name of the song to add.</param>
+        /// <returns>True if the song was added, false otherwise.</returns>
         public bool AddSong(string song)
         {
-            if (songs.Count >= maxSongsCount)
+            if (_songs.Count >= _maxSongsCount)
             {
                 return false;
             }
 
-            if (songs.Contains(song))
+            if (_songs.Contains(song))
             {
                 return false;
             }
 
-            songs.Add(song);
+            _songs.Add(song);
             return true;
         }
 
-        // Удаление песни из плейлиста
+        /// <summary>
+        /// Removes a song from the playlist if it exists.
+        /// </summary>
+        /// <param name="song">The name of the song to remove.</param>
+        /// <returns>True if the song was removed, false otherwise.</returns>
         public bool RemoveSong(string song)
         {
-            if (songs.Contains(song))
-            {
-                songs.Remove(song);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _songs.Remove(song);
         }
 
-        // Возвращение строки с информацией о плейлисте
+        /// <summary>
+        /// Returns information about the playlist including its name, song count, and song list.
+        /// </summary>
+        /// <returns>A string containing playlist details.</returns>
         public string GetPlaylistInfo()
         {
-            string info = "Плейлист: " + playlistName + ", Песен: " + SongsCount + ", Песни: ";
-
-            for (int i = 0; i < songs.Count; i++)
-            {
-                info += "'" + songs[i] + "'";
-                if (i != songs.Count - 1)
-                {
-                    info += ", ";
-                }
-            }
-
+            string songList = string.Join(", ", _songs);
+            string info = $"Playlist: {_playlistName}, Songs: {SongsCount}, Titles: {songList}";
             return info;
         }
 
-        // Очистка всех песен в плейлисте
+        /// <summary>
+        /// Removes all songs from the playlist.
+        /// </summary>
         public void ClearPlaylist()
         {
-            songs.Clear();
+            _songs.Clear();
         }
     }
 }
